@@ -5,6 +5,10 @@ namespace Thinktecture.IdentityServer.NH.Mappings {
         public ConsentMap() {
             Schema(NHibernateServiceOptions.Schema);
             Id(x => x.Id);
+
+            Map(x => x.ClientId);
+            Map(x => x.Subject);
+            Map(x => x.Scopes);
         }
     }
 }

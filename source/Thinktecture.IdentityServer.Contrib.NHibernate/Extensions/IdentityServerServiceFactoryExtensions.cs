@@ -42,6 +42,7 @@ namespace Thinktecture.IdentityServer.NH.Extensions {
                     m.AutoMappings.Add(
                         AutoMap
                             .AssemblyOf<NHibernateServiceOptions>(new AutomappingConfiguration())
+                            .AddMappingsFromAssemblyOf<NHibernateServiceOptions>()
                             .UseOverridesFromAssemblyOf<NHibernateServiceOptions>()
                             .Conventions.AddFromAssemblyOf<NHibernateServiceOptions>()
                     );

@@ -5,10 +5,15 @@ namespace Thinktecture.IdentityServer.NH.Mappings {
     public class TokenMap : ClassMap<Token> {
         public TokenMap() {
             Schema(NHibernateServiceOptions.Schema);
+            
             CompositeId()
-                .KeyProperty(x => x.Key, set => { })
-                .KeyProperty(x => x.TokenType, set => { });
-            Map(x => x.TokenType).CustomType<EnumStringType<TokenType>>();
+                .KeyProperty(x => x.Key, set => { set.ColumnName("\"Key\""); })
+                .KeyProperty(x => x.TokenType, set => { }).CustomType<EnumStringType<TokenType>>();
+
+            Map(x => x.ClientId);
+            Map(x => x.Expiry);
+            Map(x => x.JsonCode);
+            Map(x => x.SubjectId);
         }
     }
 }

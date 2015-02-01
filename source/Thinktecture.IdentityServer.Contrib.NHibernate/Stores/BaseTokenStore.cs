@@ -73,7 +73,7 @@ namespace Thinktecture.IdentityServer.NH.Stores {
                         .Select(x => ConvertFromJson(x.JsonCode))
                         .ToArray();
 
-                    return tokens.Cast<ITokenMetadata>();
+                    return tokens.Cast<ITokenMetadata>().ToArray().AsEnumerable();
                 }
             });
         }

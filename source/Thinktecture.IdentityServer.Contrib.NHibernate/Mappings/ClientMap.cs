@@ -7,8 +7,6 @@ namespace Thinktecture.IdentityServer.NH.Mappings {
             Schema(NHibernateServiceOptions.Schema);
             Id(x => x.Id);
 
-            Map(x => x.Enabled).Default("True");
-
             HasMany(x => x.ClientSecrets).AsSet().Cascade.All();
 
             HasMany(x => x.RedirectUris).AsSet().Cascade.All();
@@ -25,6 +23,23 @@ namespace Thinktecture.IdentityServer.NH.Mappings {
             Map(x => x.RefreshTokenUsage).CustomType<EnumStringType<TokenUsage>>();
             Map(x => x.RefreshTokenExpiration).CustomType<EnumStringType<TokenExpiration>>();
             Map(x => x.AccessTokenType).CustomType<EnumStringType<AccessTokenType>>();
+
+            Map(x => x.AbsoluteRefreshTokenLifetime);
+            Map(x => x.AccessTokenLifetime);
+            Map(x => x.AllowRememberConsent);
+            Map(x => x.AlwaysSendClientClaims);
+            Map(x => x.AuthorizationCodeLifetime);
+            Map(x => x.ClientId);
+            Map(x => x.ClientName);
+            Map(x => x.ClientUri);
+            Map(x => x.Enabled);
+            Map(x => x.EnableLocalLogin);
+            Map(x => x.IdentityTokenLifetime);
+            Map(x => x.IncludeJwtId);
+            Map(x => x.LogoUri);
+            Map(x => x.PrefixClientClaims);
+            Map(x => x.RequireConsent);
+            Map(x => x.SlidingRefreshTokenLifetime);
         }
     }
 }

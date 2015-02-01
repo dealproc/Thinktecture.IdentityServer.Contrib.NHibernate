@@ -1,10 +1,14 @@
 ﻿using NHibernate;
 using NHibernate.Linq;
+using NHibernate.SqlCommand;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Services;
+using Thinktecture.IdentityServer.NH.Logging;
 namespace Thinktecture.IdentityServer.NH.Stores {
     public class ClientStore : IClientStore {
+        static readonly ILog Logger = LogProvider.For<ClientStore>();
         ISessionFactory _SessionFactory;
         public ClientStore(ISessionFactory sessionFactory) {
             _SessionFactory = sessionFactory;
@@ -12,16 +16,32 @@ namespace Thinktecture.IdentityServer.NH.Stores {
         public Task<Thinktecture.IdentityServer.Core.Models.Client> FindClientByIdAsync(string clientId) {
             return Task.Factory.StartNew<Thinktecture.IdentityServer.Core.Models.Client>(() => {
                 using (var session = _SessionFactory.OpenSession()) {
-                    var client = session.Query<Entities.Client>()
-                        .Fetch(x => x.ClientSecrets)
-                        .Fetch(x => x.RedirectUris)
-                        .Fetch(x => x.PostLogoutRedirectUris)
-                        .Fetch(x => x.ScopeRestrictions)
-                        .Fetch(x => x.IdentityProviderRestrictions)
-                        .Fetch(x => x.Claims)
-                        .Fetch(X => X.CustomGrantTypeRestrictions)
-                        .SingleOrDefault(x => x.ClientId == clientId);
+                    Logger.Log(LogLevel.Debug, () => string.Format("Retrieving information for client: '{0}'", clientId));
+                    Entities.Client client = null;
+                    try {
 
+                        client = session.QueryOver<Entities.Client>()
+                            .Where(x => x.ClientId == clientId)
+                            .Fetch(x => x.ClientSecrets).Eager
+                            .Fetch(x => x.ClientSecrets).Eager
+                            .Fetch(x => x.RedirectUris).Eager
+                            .Fetch(x => x.PostLogoutRedirectUris).Eager
+                            .Fetch(x => x.ScopeRestrictions).Eager
+                            .Fetch(x => x.IdentityProviderRestrictions).Eager
+                            .Fetch(x => x.Claims).Eager
+                            .Fetch(X => X.CustomGrantTypeRestrictions).Eager
+                            .SingleOrDefault();
+
+                    } catch (Exception ex) {
+                        Logger.Log(LogLevel.Error, () => "Could not retrieve client from database.", ex);
+                        return null;
+                    }
+                    if (client == null) {
+                        Logger.Log(LogLevel.Debug, () => "Client was not found.");
+                        return null;
+                    }
+
+                    Logger.Log(LogLevel.Debug, () => "Client found.  Building model and returning to caller.");
                     var model = new Thinktecture.IdentityServer.Core.Models.Client {
                         AbsoluteRefreshTokenLifetime = client.AbsoluteRefreshTokenLifetime,
                         AccessTokenLifetime = client.AccessTokenLifetime,

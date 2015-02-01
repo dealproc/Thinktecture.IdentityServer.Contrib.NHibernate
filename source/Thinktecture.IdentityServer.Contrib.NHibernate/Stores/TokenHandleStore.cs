@@ -8,7 +8,8 @@ namespace Thinktecture.IdentityServer.NH.Stores {
         public TokenHandleStore(ISessionFactory sessionFactory, IScopeStore scopeStore, IClientStore clientStore) : base(sessionFactory, TokenType.TokenHandle, scopeStore, clientStore) { }
         public override Task StoreAsync(string key, Thinktecture.IdentityServer.Core.Models.Token value) {
             return Task.Factory.StartNew(() => {
-                using (var session = _SessionFactory.OpenSession()) {
+                using (var session = _SessionFactory.OpenSession()) 
+                using (var transaction = session.BeginTransaction()) {
                     var nhToken = new Entities.Token {
                         Key = key,
                         SubjectId = value.SubjectId,
@@ -19,6 +20,7 @@ namespace Thinktecture.IdentityServer.NH.Stores {
                     };
                     session.SaveOrUpdate(nhToken);
                     session.Flush();
+                    transaction.Commit();
                     return Task.FromResult(0);
                 }
             });

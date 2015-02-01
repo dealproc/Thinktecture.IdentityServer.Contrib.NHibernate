@@ -6,6 +6,11 @@ namespace Thinktecture.IdentityServer.NH.Mappings {
             Schema(NHibernateServiceOptions.Schema);
             Id(x => x.Id);
             References(x => x.Client);
+
+            Map(x => x.ClientSecretType);
+            Map(x => x.Description);
+            Map(x => x.Expiration);
+            Map(x => x.Value);
         }
     }
 }

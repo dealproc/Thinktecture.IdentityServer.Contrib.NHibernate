@@ -15,15 +15,14 @@ namespace Thinktecture.IdentityServer.NH.Stores {
             return Task.Factory.StartNew(() => {
                 using (var session = _SessionFactory.OpenSession()) {
                     var query = session
-                        .Query<Entities.Scope>()
-                        .Fetch(s => s.ScopeClaims)
-                        .ToFuture();
+                        .QueryOver<Entities.Scope>()
+                        .Fetch(s => s.ScopeClaims).Eager;
 
                     if (scopeNames != null && scopeNames.Any()) {
-                        query = query.Where(s => scopeNames.Contains(s.Name));
+                        query = query.WhereRestrictionOn(x => x.Name).IsIn(scopeNames.ToArray());
                     }
 
-                    return ToModel(query);
+                    return ToModel(query.List());
                 }
             });
         }
@@ -31,15 +30,15 @@ namespace Thinktecture.IdentityServer.NH.Stores {
             return Task.Factory.StartNew(() => {
                 using (var session = _SessionFactory.OpenSession()) {
                     var query = session
-                        .Query<Entities.Scope>()
-                        .Fetch(s => s.ScopeClaims)
-                        .ToFuture();
+                        .QueryOver<Entities.Scope>()
+                        .Fetch(s => s.ScopeClaims).Eager;
+
 
                     if (publicOnly) {
                         query = query.Where(s => s.ShowInDiscoveryDocument);
                     }
 
-                    return ToModel(query);
+                    return ToModel(query.List());
                 }
             });
         }
