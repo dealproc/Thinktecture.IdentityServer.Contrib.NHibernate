@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A2322FC-65CA-49F5-92FD-99E6FE8CF14E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Thinktecture.IdentityServer.NH</RootNamespace>
+    <AssemblyName>Thinktecture.IdentityServer.Contrib.NHibernate</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\..\packages\FluentMigrator.1.4.0.0\lib\40\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache">
+      <HintPath>..\..\packages\NHibernate.Caches.SysCache.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Thinktecture.IdentityServer3">
+      <HintPath>..\..\packages\Thinktecture.IdentityServer3.1.0.0\lib\net45\Thinktecture.IdentityServer3.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutomappingConfiguration.cs" />
+    <Compile Include="Conventions\ForeignKeyConstraintNameConvention.cs" />
+    <Compile Include="Conventions\ForeignKeyNameConvention.cs" />
+    <Compile Include="Conventions\PrimaryKeyNameConvention.cs" />
+    <Compile Include="Conventions\ReferenceConvention.cs" />
+    <Compile Include="Conventions\StringColumnLengthConvention.cs" />
+    <Compile Include="Conventions\TableNameConvention.cs" />
+    <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\ClientClaim.cs" />
+    <Compile Include="Entities\ClientGrantTypeRestriction.cs" />
+    <Compile Include="Entities\ClientIdPRestriction.cs" />
+    <Compile Include="Entities\ClientPostLogoutRedirectUri.cs" />
+    <Compile Include="Entities\ClientRedirectUri.cs" />
+    <Compile Include="Entities\ClientScopeRestriction.cs" />
+    <Compile Include="Entities\ClientSecret.cs" />
+    <Compile Include="Entities\Consent.cs" />
+    <Compile Include="Entities\Scope.cs" />
+    <Compile Include="Entities\ScopeClaim.cs" />
+    <Compile Include="Entities\Token.cs" />
+    <Compile Include="Entities\TokenType.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\IdentityServerServiceFactoryExtensions.cs" />
+    <Compile Include="Mappings\ClientClaimMap.cs" />
+    <Compile Include="Mappings\ClientGrantTypeRestrictionMap.cs" />
+    <Compile Include="Mappings\ClientIdPRestrictionMap.cs" />
+    <Compile Include="Mappings\ClientMap.cs" />
+    <Compile Include="Mappings\ClientPostLogoutRedirectUriMap.cs" />
+    <Compile Include="Mappings\ClientRedirectUriMap.cs" />
+    <Compile Include="Mappings\ClientScopeRestrictionMap.cs" />
+    <Compile Include="Mappings\ClientSecretMap.cs" />
+    <Compile Include="Mappings\ConsentMap.cs" />
+    <Compile Include="Mappings\ScopeClaimMap.cs" />
+    <Compile Include="Mappings\ScopeMap.cs" />
+    <Compile Include="Mappings\TokenMap.cs" />
+    <Compile Include="NHibernateServiceOptions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\AsyncHelper.cs" />
+    <Compile Include="Serialization\ClaimsConverter.cs" />
+    <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />
+    <Compile Include="Serialization\ClientConverter.cs" />
+    <Compile Include="Serialization\ScopeConverter.cs" />
+    <Compile Include="Stores\AuthorizationCodeStore.cs" />
+    <Compile Include="Stores\BaseTokenStore.cs" />
+    <Compile Include="Stores\ClientStore.cs" />
+    <Compile Include="Stores\ConsentStore.cs" />
+    <Compile Include="Stores\RefreshTokenStore.cs" />
+    <Compile Include="Stores\ScopeStore.cs" />
+    <Compile Include="Stores\TokenHandleStore.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
